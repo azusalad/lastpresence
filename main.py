@@ -31,9 +31,7 @@ class LastPresence:
             self.scrobbling = True
         else:
             self.scrobbling = False
-        #print('title is ' + str(title))
-        #print('artist is ' + str(artist))
-        time.sleep(5)
+        time.sleep(1)
 
         # now try to find the song length
         self.r = requests.get(self.href)
@@ -52,8 +50,8 @@ class LastPresence:
     def cooldown(self):
         # wait before fetching last.fm again
         if self.length:
-            print('waiting ' + str(self.length + 5))
-            time.sleep(self.length + 5)
+            print('waiting ' + str(self.length))
+            time.sleep(self.length)
         else:
             print('waiting ' + str(default_wait))
             time.sleep(default_wait)
