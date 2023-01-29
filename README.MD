@@ -11,7 +11,7 @@ Python, pypresence, requests, bs4
 `pip install -r requirements.txt`
 
 ## Usage
-Edit `config.py` and put your profile link.  Example: https://www.last.fm/user/username
+Edit `config.py` and put your profile link.  Example: `https://www.last.fm/user/username`
 
 Then run main.py
 
