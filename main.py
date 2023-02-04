@@ -33,7 +33,12 @@ class LastPresence:
         self.soup = BeautifulSoup(self.r.text, 'lxml')
 
         # find song information
-        self.current = self.soup.find_all("tr")[1]
+        try:
+            self.current = self.soup.find_all("tr")[1]
+        except IndexError:
+            print('Finding song failed retrying in 5 seconds')
+            time.sleep(5)
+            self.scrape()
         self.name = self.current.find('td', class_='chartlist-name').find('a')
         self.title = self.name.attrs['title']
         self.href = "https://www.last.fm" + self.name.attrs['href']
