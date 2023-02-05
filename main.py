@@ -22,6 +22,7 @@ class LastPresence:
         print("Fetched old song duration information")
         self.client.connect()
         print("Connected to discord\n")
+        self.prev = None
         self.loop()
 
     def scrape(self):
@@ -105,11 +106,13 @@ class LastPresence:
     def loop(self):
         self.scrape()
         self.find_duration()
-        self.client.update(large_image="large_img",
-                        large_text=LARGE_TXT,
-                        details="Playing a song",
-                        state=f'{self.artist}: {self.title}',
-                        start=time.time())
+        if self.prev != self.title + self.artist:
+            self.client.update(large_image="large_img",
+                            large_text=LARGE_TXT,
+                            details="Playing a song",
+                            state=f'{self.artist}: {self.title}',
+                            start=time.time())
+        self.prev = self.title + self.artist
         self.cooldown()
         self.loop()
 
