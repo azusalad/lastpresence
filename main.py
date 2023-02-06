@@ -44,13 +44,11 @@ class LastPresence:
         self.title = self.name.attrs['title']
         self.href = "https://www.last.fm" + self.name.attrs['href']
         self.artist = self.current.find('td', class_='chartlist-artist').find('a').attrs['title']
-        """
-        # unused
-        if "Scrobbling now" in self.current.find('span', class_= "chartlist-now-scrobbling").find('a').text:
+        # check if currently scrobbling
+        if bool(self.current.find('span', class_= "chartlist-now-scrobbling")):
             self.scrobbling = True
         else:
             self.scrobbling = False
-        """
         time.sleep(1)
 
         print('Current artist: ' + str(self.artist))
@@ -106,12 +104,18 @@ class LastPresence:
     def loop(self):
         self.scrape()
         self.find_duration()
-        if self.prev != self.title + self.artist:
+        if self.scrobbling:
+            if self.prev != self.title + self.artist:
+                self.client.update(large_image="large_img",
+                                large_text=large_txt,
+                                details=playing_txt,
+                                state=f'{self.artist}: {self.title}',
+                                start=time.time())
+        else:
             self.client.update(large_image="large_img",
-                            large_text=LARGE_TXT,
-                            details="Playing a song",
-                            state=f'{self.artist}: {self.title}',
-                            start=time.time())
+                large_text=large_txt,
+                details=idle_txt,
+                state=f'{self.artist}: {self.title}')
         self.prev = self.title + self.artist
         self.cooldown()
         self.loop()
