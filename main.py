@@ -111,7 +111,7 @@ class LastPresence:
                                 details=playing_txt,
                                 state=f'{self.artist}: {self.title}',
                                 start=time.time(),
-                                buttons=[{"label": "My Profile", "url": profile_url}])
+                                buttons=[{"label": "My Profile", "url": profile_url},{"label": "Currently Playing", "url": self.href}])
         else:
             self.client.update(large_image="large_img",
                 large_text=large_txt,
