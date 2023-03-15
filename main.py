@@ -110,12 +110,14 @@ class LastPresence:
                                 large_text=large_txt,
                                 details=playing_txt,
                                 state=f'{self.artist}: {self.title}',
-                                start=time.time())
+                                start=time.time(),
+                                buttons=[{"label": "My Profile", "url": profile_url}])
         else:
             self.client.update(large_image="large_img",
                 large_text=large_txt,
                 details=idle_txt,
-                state=f'{self.artist}: {self.title}')
+                state=f'{self.artist}: {self.title}',
+                buttons=[{"label": "My Profile", "url": profile_url}])
         self.prev = self.title + self.artist
         self.cooldown()
         self.loop()
@@ -123,4 +125,3 @@ class LastPresence:
 if __name__ == "__main__":
     updater = LastPresence()
     updater.start()
-
