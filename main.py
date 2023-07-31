@@ -44,6 +44,9 @@ class LastPresence:
         self.title = self.name.attrs['title']
         self.href = "https://www.last.fm" + self.name.attrs['href']
         self.artist = self.current.find('td', class_='chartlist-artist').find('a').attrs['title']
+        self.image = self.current.find('img').attrs['src']
+        if "c6f59c1e5e7240a4c0d427abd71f3dbb" in self.image:
+            self.image = "large_img"
         # check if currently scrobbling
         if bool(self.current.find('span', class_= "chartlist-now-scrobbling")):
             self.scrobbling = True
@@ -106,14 +109,14 @@ class LastPresence:
         self.find_duration()
         if self.scrobbling:
             if self.prev != self.title + self.artist:
-                self.client.update(large_image="large_img",
+                self.client.update(large_image=self.image,
                                 large_text=large_txt,
                                 details=playing_txt,
                                 state=f'{self.artist}: {self.title}',
                                 start=time.time(),
                                 buttons=[{"label": "My Profile", "url": profile_url},{"label": "Currently Playing", "url": self.href}])
         else:
-            self.client.update(large_image="large_img",
+            self.client.update(large_image=self.image,
                 large_text=large_txt,
                 details=idle_txt,
                 state=f'{self.artist}: {self.title}',
