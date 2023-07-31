@@ -1,6 +1,6 @@
 # Last Presence
 
-Discord rich presence for last.fm
+Discord rich presence for last.fm.  Uses requests instead of api to fetch data.
 
 ![preview](preview.png)
 
